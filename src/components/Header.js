@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header(props) {
   const { title } = props;
@@ -34,17 +35,7 @@ function Header(props) {
         <img src={ profileIcon } alt="profile icon" data-testid="profile-top-btn" />
       </button>
 
-      {isSearching
-      && (
-        <div>
-          <input
-            type="text"
-            name="search"
-            id="search"
-            data-testid="search-input"
-          />
-        </div>
-      )}
+      {isSearching ? <SearchBar /> : null}
     </header>
   );
 }
