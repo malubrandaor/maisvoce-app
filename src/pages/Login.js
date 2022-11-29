@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [email, emailChange] = useState('');
   const [password, passwordChange] = useState('');
-
+  const history = useHistory();
   // Função que valida o email e o password, alterando o button
   const validadeButton = () => {
     const magicNumber = 6;
@@ -12,7 +13,16 @@ function Login() {
     return !validate;
   };
 
+  const saveUserLocalStorage = () => {
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ email }),
+    );
+    history.push('/meals');
+  };
+
   return (
+
     <div>
       <label htmlFor="email">
         <input
@@ -34,6 +44,7 @@ function Login() {
       </label>
 
       <button
+        onClick={ saveUserLocalStorage }
         disabled={ validadeButton() }
         data-testid="login-submit-btn"
         type="button"

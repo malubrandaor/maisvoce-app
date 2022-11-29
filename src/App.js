@@ -8,6 +8,7 @@ import Login from './pages/Login';
 function App() {
   return (
     <Switch>
+
       <Route exact path="/" component={ Login } />
       {/* <div className="meals">
         <span className="logo">TRYBE</span>
@@ -19,6 +20,7 @@ function App() {
           Glass
         </object>
       </div> */}
+
     </Switch>
   );
 }
