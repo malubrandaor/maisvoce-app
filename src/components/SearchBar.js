@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { fetchDrinks } from '../app/slices/drinks';
 import { fetchMeals } from '../app/slices/meals';
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('');
   const dispatch = useDispatch();
+  const { location: { pathname } } = useHistory();
 
   const onSearchRecipes = ({ target: { value } }) => {
     setSearchTerm(value);
@@ -22,9 +25,13 @@ function SearchBar() {
   };
 
   const onSearch = () => {
-    if (searchType === 'f') global.alert('Your search must have only 1 (one) character');
+    if (searchType === 'f' && searchTerm.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+      return;
+    }
 
-    dispatch(fetchMeals({ searchType, searchTerm }));
+    if (pathname === '/meals') return dispatch(fetchMeals({ searchType, searchTerm }));
+    if (pathname === '/drinks') return dispatch(fetchDrinks({ searchType, searchTerm }));
   };
 
   return (
