@@ -51,7 +51,7 @@ function SearchBar() {
       return;
     }
 
-    if (pathname === '/meals') return dispatch(fetchMeals({ searchType, searchTerm }));
+    if (pathname === '/meals') dispatch(fetchMeals({ searchType, searchTerm }));
     if (pathname === '/drinks') dispatch(fetchDrinks({ searchType, searchTerm }));
   };
 

@@ -1,13 +1,24 @@
-import React from 'react';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+
+import store from '../../app/store';
 
 function withRouter(component, history) {
   return (
     <Router history={ history }>
       { component }
     </Router>
+  );
+}
+
+function withRedux(component) {
+  return (
+    <Provider store={ store }>
+      { component }
+    </Provider>
   );
 }
 
@@ -24,26 +35,21 @@ export default function renderWithRouter(
   };
 }
 
-// export function renderWithRedux(component, options = {}) {
-//   const {
-//     initialState = {},
-//     store = createStore(rootReducer, initialState, applyMiddleware(thunk)),
-//   } = options;
+export function renderWithRedux(component) {
+  return {
+    ...render(withRedux(component)),
+    store,
+  };
+}
 
-//   return {
-//     ...render(withRedux(component, store)),
-//     store,
-//   };
-// }
+export function renderWithRouterAndRedux(component, options = {}) {
+  const {
+    initialEntries = ['/'],
+    history = createMemoryHistory({ initialEntries }),
+  } = options;
 
-// export function renderWithRouterAndRedux(component, options = {}) {
-//   const {
-//     initialEntries = ['/'],
-//     history = createMemoryHistory({ initialEntries }),
-//   } = options;
-
-//   return {
-//     ...renderWithRedux(withRouter(component, history), options),
-//     history,
-//   };
-// }
+  return {
+    ...renderWithRedux(withRouter(component, history)),
+    history,
+  };
+}
