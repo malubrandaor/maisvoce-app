@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 /**
  * Faz a requisição para a API de bebidas.
- *
  * @param {object} param - Objeto com o searchType e searchTerm
  * @returns {object} - Um objeto com as informações da receita.
  */
