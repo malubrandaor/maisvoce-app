@@ -33,8 +33,19 @@ const recipesSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchMeals.fulfilled, (state, action) => {
+        if (action.payload.meals === null) {
+          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+          state.loading = false;
+          return;
+        }
+
         state.data = action.payload.meals;
         state.loading = false;
+      })
+      .addCase(fetchMeals.rejected, (state) => {
+        state.loading = false;
+        state.data = [];
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
       });
   },
 });
