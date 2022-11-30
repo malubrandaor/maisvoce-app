@@ -1,30 +1,37 @@
-import { useHistory } from 'react-router-dom'; // import do hook
+import { useHistory } from 'react-router-dom';
+import '../App.css'; // import do hook
 
 function Footer() {
   const history = useHistory();
 
   function routeDrink() {
-    history.push('/drink'); // uso do hook para ir para a página /dogRegister
+    history.push('/drinks'); // uso do hook para ir para a página /dogRegister
   }
   function routeMeal() {
-    history.push('/meal'); // uso do hook para ir para a página /dogRegister
+    history.push('/meals'); // uso do hook para ir para a página /dogRegister
   }
 
   return (
-    <div data-testid="footer">
+    <div data-testid="footer" className="divFooter">
       <button
         onClick={ routeDrink }
-        data-testid="drinks-bottom-btn"
         type="button"
       >
-        <img src="../images/drinkIcon.svg" alt="Drink Icon" />
+        <img
+          src="../images/drinkIcon.svg"
+          alt="Drink Icon"
+          data-testid="drinks-bottom-btn"
+        />
       </button>
       <button
         onClick={ routeMeal }
-        data-testid="meals-bottom-btn"
         type="button"
       >
-        <img src="../images/mealIcon.svg" alt="Meal Icon" />
+        <img
+          src="../images/mealIcon.svg"
+          alt="Meal Icon"
+          data-testid="meals-bottom-btn"
+        />
       </button>
 
     </div>
