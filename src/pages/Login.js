@@ -5,6 +5,7 @@ function Login() {
   const [email, emailChange] = useState('');
   const [password, passwordChange] = useState('');
   const history = useHistory();
+
   // Função que valida o email e o password, alterando o button
   const validadeButton = () => {
     const magicNumber = 6;
@@ -22,7 +23,6 @@ function Login() {
   };
 
   return (
-
     <div>
       <label htmlFor="email">
         <input
@@ -52,7 +52,6 @@ function Login() {
         Enter
 
       </button>
-
     </div>
   );
 }

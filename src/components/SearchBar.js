@@ -67,29 +67,41 @@ function SearchBar() {
       />
 
       <div>
-        <input
-          type="radio"
-          value="ingredient"
-          name="filter"
-          data-testid="ingredient-search-radio"
-          onChange={ (e) => onChangeFilter(e) }
-        />
+        <label htmlFor="ingredient">
+          <input
+            type="radio"
+            value="ingredient"
+            id="ingredient"
+            name="filter"
+            data-testid="ingredient-search-radio"
+            onChange={ (e) => onChangeFilter(e) }
+          />
+          Ingredient
+        </label>
 
-        <input
-          type="radio"
-          value="name"
-          name="filter"
-          data-testid="name-search-radio"
-          onChange={ (e) => onChangeFilter(e) }
-        />
+        <label htmlFor="name">
+          <input
+            type="radio"
+            value="name"
+            id="name"
+            name="filter"
+            data-testid="name-search-radio"
+            onChange={ (e) => onChangeFilter(e) }
+          />
+          Name
+        </label>
 
-        <input
-          type="radio"
-          value="first-letter"
-          name="filter"
-          data-testid="first-letter-search-radio"
-          onChange={ (e) => onChangeFilter(e) }
-        />
+        <label htmlFor="first-letter">
+          <input
+            type="radio"
+            value="first-letter"
+            id="first-letter"
+            name="filter"
+            data-testid="first-letter-search-radio"
+            onChange={ (e) => onChangeFilter(e) }
+          />
+          First Letter
+        </label>
       </div>
 
       <button
