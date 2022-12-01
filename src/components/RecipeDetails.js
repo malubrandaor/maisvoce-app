@@ -30,12 +30,11 @@ function RecipeDetails() {
       setRecipe(responseJson.drinks[0]);
 
       const responseMeals = await
-      fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const responseMealsJSON = await responseMeals.json();
       setMealsRecommendation(responseMealsJSON.meals);
     }
   };
-
   const findIngredients = (obj) => {
     const ingredients = [];
     const ingredientsWithMeasures = [];
@@ -46,12 +45,30 @@ function RecipeDetails() {
         }
       });
 
+    let counter = 1;
     ingredients.forEach((obj4, i) => {
-      if (i === 0) { i = 1; }
-      ingredientsWithMeasures.push({ name: obj4, measure: obj[`strMeasure${i}`] });
+      if (i === 0) { counter = 1; }
+      ingredientsWithMeasures.push({ name: obj4, measure: obj[`strMeasure${counter}`] });
+      counter += 1;
+      // console.log(counter);
     });
     return ingredientsWithMeasures;
   };
+
+  // const findIngredientsTest = (object) => {
+  //   const i = Object.entries(object)
+  //     .filter((el) => el[0].includes('strIngredient') && el[1]?.length > 0);
+  //   const m = Object.entries(object)
+  //     .filter((el) => el[0].includes('strMeasure') && el[1]?.length > 0);
+
+  //   const r = i.map((ingredient) => {
+  //     m.forEach((measure) => ({ ingredient, measure }));
+  //   });
+
+  //   console.log(r);
+  // };
+
+  // findIngredientsTest(recipe);
 
   useEffect(() => {
     requestApi(params.id, history.location.pathname.split('/')[1]);
@@ -61,7 +78,6 @@ function RecipeDetails() {
     const urlEmbed = `https://www.youtube.com/embed/${url.split('https://www.youtube.com/')}`;
     return urlEmbed;
   }
-  console.log(embedVideo('https://www.youtube.com/watch?v=1IszT_guI08'));
   return (
     <div>
       <img
@@ -71,13 +87,16 @@ function RecipeDetails() {
          || recipe.strDrinkThumb }
       />
       <h1 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h1>
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
+      <p data-testid="recipe-category">
+        {`${recipe.strCategory} ${recipe.strAlcoholic}`}
+      </p>
       {findIngredients(recipe).map((ingredient, i) => (
         <p data-testid={ `${i}-ingredient-name-and-measure` } key={ i }>
           {`${ingredient.name} ${ingredient.measure}`}
         </p>))}
-
+      <p data-testid="instructions">{recipe.strInstructions}</p>
       {recipe.strYoutube && <iframe
+        data-testid="video"
         width="560"
         title={ recipe.strMealThumb }
         height="315"
