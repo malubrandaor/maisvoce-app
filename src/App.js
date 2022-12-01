@@ -1,16 +1,26 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import DoneRecipes from './pages/DoneRecipes';
 import Drinks from './pages/Drinks';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import Login from './pages/Login';
 import Meals from './pages/Meals';
 import Profile from './pages/Profile';
-// import rockGlass from './images/rockGlass.svg';
-import Login from './pages/Login';
+
+import { fetchDrinksCategories } from './app/slices/drinks';
+import { fetchMealsCategories } from './app/slices/meals';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDrinksCategories());
+    dispatch(fetchMealsCategories());
+  }, [dispatch]);
+
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
