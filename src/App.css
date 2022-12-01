@@ -29,10 +29,10 @@
 }
 */
 
-.meals > .logo {
+.meals>.logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
-  font-family: Montserrat , sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 3em;
   font-weight: 900;
 }
@@ -70,4 +70,19 @@
 .divFooter {
   bottom: 0;
   position: fixed;
+}
+
+.slider {
+  background-color: red;
+  display: flex;
+  gap: 16px;
+  height: 160px;
+  overflow-x: scroll;
+  width: 360px;
+}
+
+
+.slider div {
+  border: 2px solid red;
+  width: 50%;
 }

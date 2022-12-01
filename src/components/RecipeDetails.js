@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import '../App.css';
 
 function RecipeDetails() {
   const params = useParams();
   const history = useHistory();
-
+  const magic = 6;
   const [recipe, setRecipe] = useState([]);
 
   const [mealsRecommendation, setMealsRecommendation] = useState([]);
   const [drinksRecommendation, setDrinksRecommendation] = useState([]);
 
+  /**
+   *Request da Api com ID especifico de cada receita
+   * @param {*} id
+   * @param {*} type
+   */
   const requestApi = async (id, type) => {
     if (type === 'meals') {
       const response = await
@@ -35,6 +41,12 @@ function RecipeDetails() {
       setMealsRecommendation(responseMealsJSON.meals);
     }
   };
+  /**
+ * ingredients array de objetos somente com ingredientes
+ * ingredientsWithMeasures array com ingredientes e measurements
+ * @param {*} obj
+ * @returns INGREDIENTES AND MEASUREMENTS
+ */
   const findIngredients = (obj) => {
     const ingredients = [];
     const ingredientsWithMeasures = [];
@@ -55,29 +67,20 @@ function RecipeDetails() {
     return ingredientsWithMeasures;
   };
 
-  // const findIngredientsTest = (object) => {
-  //   const i = Object.entries(object)
-  //     .filter((el) => el[0].includes('strIngredient') && el[1]?.length > 0);
-  //   const m = Object.entries(object)
-  //     .filter((el) => el[0].includes('strMeasure') && el[1]?.length > 0);
-
-  //   const r = i.map((ingredient) => {
-  //     m.forEach((measure) => ({ ingredient, measure }));
-  //   });
-
-  //   console.log(r);
-  // };
-
-  // findIngredientsTest(recipe);
-
   useEffect(() => {
     requestApi(params.id, history.location.pathname.split('/')[1]);
   }, []);
 
+  /**
+  *
+  * @param {*} url
+  * @returns Return video embed
+  */
   function embedVideo(url) {
     const urlEmbed = `https://www.youtube.com/embed/${url.split('https://www.youtube.com/')}`;
     return urlEmbed;
   }
+  console.log(mealsRecommendation);
   return (
     <div>
       <img
@@ -104,7 +107,26 @@ function RecipeDetails() {
         frameBorder="0"
         allowFullScreen
       />}
+      <div className="slider">
+        {(recipe.strDrink ? mealsRecommendation : drinksRecommendation)
+          .slice(0, magic).map((recomendation, index) => (
+            <div
+              data-testid={ `${index}-recommendation-card` }
+              key={ recomendation.strMeal || recomendation.strDrink }
+            >
+              <p data-testid={ `${index}-recommendation-title` }>
+                {recomendation.strMeal || recomendation.strDrink}
 
+              </p>
+              <img
+                alt="recipeImage"
+                src={ recomendation.strMealThumb || recomendation.strDrinkThumb }
+              />
+            </div>
+          ))}
+
+      </div>
+      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
     </div>
   );
 }
