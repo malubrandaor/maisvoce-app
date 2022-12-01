@@ -11,6 +11,8 @@ function RecipeDetails() {
   const [mealsRecommendation, setMealsRecommendation] = useState([]);
   const [drinksRecommendation, setDrinksRecommendation] = useState([]);
 
+  const [isInProgress, setProgress] = useState(false);
+
   /**
    *Request da Api com ID especifico de cada receita
    * @param {*} id
@@ -80,6 +82,16 @@ function RecipeDetails() {
     const urlEmbed = `https://www.youtube.com/embed/${url.split('https://www.youtube.com/')}`;
     return urlEmbed;
   }
+
+  const setInProgress = (id, ingredients, type) => {
+    const inProgress = localStorage.getItem('inProgressRecipes');
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      meals: { [id]: [Object.values(ingredients)] },
+      drinks: {} }));
+
+    // localStorage.setItem('inProgressRecipes', { drinks: { }, meals: { } });
+  };
+
   console.log(mealsRecommendation);
   return (
     <div>
@@ -107,6 +119,19 @@ function RecipeDetails() {
         frameBorder="0"
         allowFullScreen
       />}
+      <button
+        onClick={ () => setInProgress(
+          params.id,
+          findIngredients(recipe),
+          history.location.pathname.split('/')[1],
+        ) }
+        className="start-recipe"
+        type="button"
+        data-testid="start-recipe-btn"
+      >
+        {isInProgress ? 'Continue Recipe' : 'Start Recipe'}
+
+      </button>
       <div className="slider">
         {(recipe.strDrink ? mealsRecommendation : drinksRecommendation)
           .slice(0, magic).map((recomendation, index) => (
@@ -126,7 +151,7 @@ function RecipeDetails() {
           ))}
 
       </div>
-      <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+
     </div>
   );
 }

@@ -86,3 +86,8 @@
   border: 2px solid red;
   width: 50%;
 }
+
+.start-recipe {
+  bottom: 0;
+  position: fixed;
+}
