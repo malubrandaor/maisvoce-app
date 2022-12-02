@@ -8,7 +8,7 @@ function Profile() {
 
   function getEmail() {
     const result = JSON.parse(localStorage.getItem('user'));
-    return result.email;
+    return result?.email;
   }
 
   function logout() {
