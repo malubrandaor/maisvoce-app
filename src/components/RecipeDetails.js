@@ -227,7 +227,7 @@ function RecipeDetails() {
         type="button"
         data-testid="share-btn"
       >
-        <img alt="share" src={ shareIcon } />
+        <img data-testid="share-icon" alt="share" src={ shareIcon } />
       </button>
       <img
         aria-hidden
