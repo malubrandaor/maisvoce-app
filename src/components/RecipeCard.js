@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 
 function RecipeCard(props) {
   const { recipe, index } = props;
-
   const history = useHistory();
 
   const onRecipeCardClick = () => {
@@ -30,6 +29,7 @@ function RecipeCard(props) {
       />
 
       <p data-testid={ `${index}-card-name` }>{ recipe.strMeal || recipe.strDrink }</p>
+
     </div>
   );
 }

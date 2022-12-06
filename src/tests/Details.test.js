@@ -5,10 +5,13 @@ import { act } from 'react-dom/test-utils';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 
+const startRecipeButtonLint = 'start-recipe-btn';
+const favoriteButtonLint = 'favorite-btn';
+
 describe('Testa o componente RecipeDetails', () => {
   it('Verifica se os botoes estão funcionando', () => {
     renderWithRouterAndRedux(<App />, { initialEntries: ['/meals/52977'] });
-    const startRecipeButton = screen.getByTestId('start-recipe-btn');
+    const startRecipeButton = screen.getByTestId(startRecipeButtonLint);
     expect(startRecipeButton).toBeInTheDocument();
     userEvent.click(startRecipeButton);
 
@@ -18,7 +21,7 @@ describe('Testa o componente RecipeDetails', () => {
     expect(shareIcon).toHaveAttribute('src', 'shareIcon.svg');
     // userEvent.click(shareIcon);
 
-    const favoriteButton = screen.getByTestId('favorite-btn');
+    const favoriteButton = screen.getByTestId(favoriteButtonLint);
     expect(favoriteButton).toBeInTheDocument();
     userEvent.click(favoriteButton);
     expect(favoriteButton).toHaveAttribute('src', 'blackHeartIcon.svg');
@@ -39,7 +42,7 @@ describe('Testa o componente RecipeDetails', () => {
       history.push('/meals/53065');
     });
 
-    const favoriteButton = await screen.findByTestId('favorite-btn');
+    const favoriteButton = await screen.findByTestId(favoriteButtonLint);
     expect(favoriteButton).toBeInTheDocument();
     userEvent.click(favoriteButton);
     userEvent.click(favoriteButton);
@@ -57,7 +60,7 @@ describe('Testa o componente RecipeDetails', () => {
     const slider = await screen.findByTestId('1-recommendation-card');
     expect(slider).toBeInTheDocument();
 
-    const startRecipeButton = screen.getByTestId('start-recipe-btn');
+    const startRecipeButton = screen.getByTestId(startRecipeButtonLint);
     expect(startRecipeButton).toBeInTheDocument();
     userEvent.click(startRecipeButton);
 
@@ -69,7 +72,7 @@ describe('Testa o componente RecipeDetails', () => {
     // localStorage.setItem('inProgressRecipes', JSON.stringify([{ id: ‘???’ }]));
     expect(localStorage.getItem('inProgressRecipes')).not.toBeNull();
 
-    const favoriteButton = await screen.findByTestId('favorite-btn');
+    const favoriteButton = await screen.findByTestId(favoriteButtonLint);
     expect(favoriteButton).toBeInTheDocument();
     userEvent.click(favoriteButton);
     userEvent.click(favoriteButton);
@@ -80,7 +83,7 @@ describe('Testa o componente RecipeDetails', () => {
     const slider = await screen.findByTestId('1-recommendation-card');
     expect(slider).toBeInTheDocument();
 
-    const startRecipeButton = screen.getByTestId('start-recipe-btn');
+    const startRecipeButton = screen.getByTestId(startRecipeButtonLint);
     expect(startRecipeButton).toBeInTheDocument();
     userEvent.click(startRecipeButton);
 
@@ -92,7 +95,7 @@ describe('Testa o componente RecipeDetails', () => {
     // localStorage.setItem('inProgressRecipes', JSON.stringify([{ id: ‘???’ }]));
     expect(localStorage.getItem('inProgressRecipes')).not.toBeNull();
 
-    const favoriteButton = await screen.findByTestId('favorite-btn');
+    const favoriteButton = await screen.findByTestId(favoriteButtonLint);
     expect(favoriteButton).toBeInTheDocument();
     userEvent.click(favoriteButton);
     userEvent.click(favoriteButton);

@@ -9,6 +9,7 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import Login from './pages/Login';
 import Meals from './pages/Meals';
 import Profile from './pages/Profile';
+import RecipeDetails from './components/RecipeDetails';
 
 import { fetchDrinksCategories } from './app/slices/drinks';
 import { fetchMealsCategories } from './app/slices/meals';
@@ -24,10 +25,10 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/meals" component={ Meals } />
-      <Route path="/drinks" component={ Drinks } />
-      <Route path="/meals/:id-da-receita" />
-      <Route path="/drinks/:id-da-receita" />
+      <Route exact path="/meals" component={ Meals } />
+      <Route exact path="/drinks" component={ Drinks } />
+      <Route path="/meals/:id" component={ RecipeDetails } />
+      <Route path="/drinks/:id" component={ RecipeDetails } />
       <Route path="/meals/:id-da-receita/in-progress" />
       <Route path="/drinks/:id-da-receita/in-progress" />
       <Route path="/profile" component={ Profile } />
