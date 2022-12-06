@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import '../App.css';
+import shareIcon from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function RecipeDetails() {
   const params = useParams();
@@ -13,6 +16,7 @@ function RecipeDetails() {
 
   const [isInProgress, setProgress] = useState(false);
 
+  const [showCoppied, setShowCoppied] = useState(false);
   /**
    *Request da Api com ID especifico de cada receita
    * @param {*} id
@@ -71,6 +75,13 @@ function RecipeDetails() {
 
   useEffect(() => {
     requestApi(params.id, history.location.pathname.split('/')[1]);
+
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (inProgress !== null) {
+      if (inProgress[history.location.pathname.split('/')[1]][params.id] !== undefined) {
+        setProgress(true);
+      }
+    } else { setProgress(false); }
   }, []);
 
   /**
@@ -84,15 +95,42 @@ function RecipeDetails() {
   }
 
   const setInProgress = (id, ingredients, type) => {
-    const inProgress = localStorage.getItem('inProgressRecipes');
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      meals: { [id]: [Object.values(ingredients)] },
-      drinks: {} }));
+    const inProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
-    // localStorage.setItem('inProgressRecipes', { drinks: { }, meals: { } });
+    if (type === 'meals') {
+      if (inProgress === null) {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          meals: { [id]: [...Object.values(ingredients)] },
+          drinks: {} }));
+
+        // localStorage.setItem('inProgressRecipes', { drinks: { }, meals: { } });
+      } else {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          meals: { ...inProgress.meals, [id]: [...Object.values(ingredients)] },
+          drinks: { ...inProgress.drinks } }));
+
+        // localStorage.setItem('inProgressRecipes', { drinks: { }, meals: { } });
+      }
+    }
+
+    if (type === 'drinks') {
+      if (inProgress === null) {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          meals: { },
+          drinks: { [id]: [...Object.values(ingredients)] } }));
+
+        // localStorage.setItem('inProgressRecipes', { drinks: { }, meals: { } });
+      } else {
+        localStorage.setItem('inProgressRecipes', JSON.stringify({
+          meals: { ...inProgress.meals },
+          drinks: { ...inProgress.drinks, [id]: [...Object.values(ingredients)] } }));
+
+        // localStorage.setItem('inProgressRecipes', { drinks: { }, meals: { } });
+      }
+    }
+    history.push(`/${type}/${params.id}/in-progress`);
   };
 
-  console.log(mealsRecommendation);
   return (
     <div>
       <img
@@ -151,7 +189,21 @@ function RecipeDetails() {
           ))}
 
       </div>
+      {showCoppied && <div role="alert">Link copied!</div> }
 
+      <button
+        style={ { marginBottom: '100px' } }
+        onClick={ () => {
+          copy(window.location.href);
+          setShowCoppied(true);
+        } }
+        type="button"
+        data-testid="share-btn"
+      >
+
+        <img alt="share" src={ shareIcon } />
+      </button>
+      <button type="button" data-testid="favorite-btn">Favorite</button>
     </div>
   );
 }
