@@ -12,6 +12,12 @@ function FavoriteRecipes() {
     setFavoriteRecipes(recipes ? JSON.parse(recipes) : []);
   }, []);
 
+  const onUnfavoriteRecipe = (id) => {
+    const newFavoriteRecipes = favoriteRecipes.filter((recipe) => recipe.id !== id);
+    setFavoriteRecipes(newFavoriteRecipes);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
+  };
+
   return (
     <>
       <Header title="Favorite Recipes" />
@@ -24,6 +30,7 @@ function FavoriteRecipes() {
             key={ recipe.id }
             recipe={ recipe }
             index={ index }
+            onUnfavoriteRecipe={ onUnfavoriteRecipe }
           />
         ))}
       </section>

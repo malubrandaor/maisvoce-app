@@ -5,11 +5,10 @@ import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteRecipesCard(props) {
-  const { recipe, index } = props;
+  const { recipe, index, onUnfavoriteRecipe } = props;
 
   const [isCopied, setIsCopied] = useState(false);
 
-  console.log(recipe);
   const onCopyToClipboard = () => {
     const url = window.location.origin;
     const { id, type } = recipe;
@@ -51,6 +50,8 @@ function FavoriteRecipesCard(props) {
         src={ blackHeartIcon }
         alt="favorite icon"
         data-testid={ `${index}-horizontal-favorite-btn` }
+        onClick={ () => onUnfavoriteRecipe(recipe.id) }
+        aria-hidden
       />
 
       { isCopied && <p role="alert">Link copied!</p> }
@@ -69,6 +70,7 @@ FavoriteRecipesCard.propTypes = {
     type: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
+  onUnfavoriteRecipe: PropTypes.func.isRequired,
 };
 
 export default FavoriteRecipesCard;
