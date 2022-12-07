@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function FavoriteRecipesFilter(props) {
+function RecipesFilter(props) {
   const { onFilterRecipes } = props;
 
   return (
@@ -33,8 +33,8 @@ function FavoriteRecipesFilter(props) {
   );
 }
 
-FavoriteRecipesFilter.propTypes = {
+RecipesFilter.propTypes = {
   onFilterRecipes: PropTypes.func.isRequired,
 };
 
-export default FavoriteRecipesFilter;
+export default RecipesFilter;

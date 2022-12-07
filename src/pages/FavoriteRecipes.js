@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import FavoriteRecipesFilter from '../components/FavoriteRecipesFilter';
+import RecipesFilter from '../components/RecipesFilter';
 import Header from '../components/Header';
 
 import FavoriteRecipesCard from '../components/FavoriteRecipesCard';
@@ -42,7 +42,7 @@ function FavoriteRecipes() {
       <Header title="Favorite Recipes" />
 
       <section>
-        <FavoriteRecipesFilter
+        <RecipesFilter
           onFilterRecipes={ onFilterRecipes }
         />
 
