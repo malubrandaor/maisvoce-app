@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import shareIcon from '../images/shareIcon.svg';
@@ -6,6 +6,19 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FavoriteRecipesCard(props) {
   const { recipe, index } = props;
+
+  const [isCopied, setIsCopied] = useState(false);
+
+  console.log(recipe);
+  const onCopyToClipboard = () => {
+    const url = window.location.origin;
+    const { id, type } = recipe;
+    navigator.clipboard.writeText(`${url}/${type}s/${id}`);
+    setIsCopied(true);
+
+    const TWO_SECONDS = 2000;
+    setTimeout(() => setIsCopied(false), TWO_SECONDS);
+  };
 
   return (
     <div key={ recipe.id }>
@@ -30,6 +43,8 @@ function FavoriteRecipesCard(props) {
         src={ shareIcon }
         alt="share icon"
         data-testid={ `${index}-horizontal-share-btn` }
+        onClick={ onCopyToClipboard }
+        aria-hidden
       />
 
       <img
@@ -37,6 +52,8 @@ function FavoriteRecipesCard(props) {
         alt="favorite icon"
         data-testid={ `${index}-horizontal-favorite-btn` }
       />
+
+      { isCopied && <p role="alert">Link copied!</p> }
     </div>
   );
 }
@@ -49,6 +66,7 @@ FavoriteRecipesCard.propTypes = {
     alcoholicOrNot: PropTypes.string,
     category: PropTypes.string,
     name: PropTypes.string,
+    type: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
 };
