@@ -9,38 +9,55 @@ function RecipeInProgress() {
 
   const history = useHistory();
 
-  const requestApi = async (id, type) => {
-    if (type === 'meals') {
+  const type = history.location.pathname.split('/')[1];
+  const id = history.location.pathname.split('/')[2];
+
+  const requestApi = async (idRecipe, typeRecipe) => {
+    if (typeRecipe === 'meals') {
       const response = await
-      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+      fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJson = await response.json();
       setRecipe(responseJson.meals[0]);
     }
 
-    if (type === 'drinks') {
+    if (typeRecipe === 'drinks') {
       const response = await
-      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+      fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJson = await response.json();
       setRecipe(responseJson.drinks[0]);
     }
   };
 
   useEffect(() => {
-    const type = history.location.pathname.split('/')[1];
-    const id = history.location.pathname.split('/')[2];
+    if (Object.keys(recipe).length
+        > 0 && localStorage.getItem('inProgressRecipes') === null) {
+      localStorage.setItem(
+        'inProgressRecipes',
+        JSON.stringify({ [type]: { [id]: findIngredients(recipe) } }),
+
+      );
+    }
+
+    console.log(JSON.parse(localStorage.getItem('inProgressRecipes')));
     if (recipe.length === 0) {
       requestApi(id, type);
     }
-  }, [recipe]);
+  }, [recipe, ingredients]);
 
   const checkIngredient = ({ target }, idx) => {
+    const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (target.checked) {
       setIngredients([...ingredients, idx]);
+      localStorageRecipes[type][id][idx].checked = true;
     } else {
       setIngredients(ingredients.filter((ingredient) => ingredient !== idx));
+      localStorageRecipes[type][id][idx].checked = false;
     }
 
-    
+    localStorage.setItem('inProgressRecipes', JSON.stringify(localStorageRecipes));
+
+    // console.log(JSON.parse(localStorage.getItem('inProgressRecipes')));
+    console.log(JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]);
   };
 
   return (
@@ -58,22 +75,30 @@ function RecipeInProgress() {
         {`${recipe.strCategory} ${recipe.strAlcoholic}`}
       </p>
       <ul>
-        {findIngredients(recipe).length > 0 && findIngredients(recipe)
+        {localStorage.getItem('inProgressRecipes')
+        && JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]
           .map((ingredient, idx) => (
             <li key={ idx }>
               <label
+                style={
+                  ingredient.checked
+                    ? { textDecoration: 'line-through solid rgb(0, 0, 0)' }
+                    : {}
+                }
                 htmlFor={ `${idx}-ingredient` }
                 data-testid={ `${idx}-ingredient-step` }
               >
                 {ingredient.name}
                 {ingredient.measure}
                 <input
+                  checked={ ingredient.checked }
                   id={ `${idx}-ingredient` }
                   onChange={ (target) => checkIngredient(target, idx) }
                   type="checkbox"
                 />
               </label>
-            </li>))}
+            </li>
+          ))}
       </ul>
 
       <p data-testid="instructions">{recipe.strInstructions}</p>
