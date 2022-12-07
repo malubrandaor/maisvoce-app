@@ -7,6 +7,25 @@ import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
+export const findIngredients = (obj) => {
+  const ingredients = [];
+  const ingredientsWithMeasures = [];
+  Object.keys(obj)
+    .filter((obj1) => obj1.includes('strIngredient')).forEach((obj3) => {
+      if (obj[obj3] !== null && obj[obj3] !== '') {
+        ingredients.push(obj[obj3]);
+      }
+    });
+
+  let counter = 1;
+  ingredients.forEach((obj4, i) => {
+    if (i === 0) { counter = 1; }
+    ingredientsWithMeasures.push({ name: obj4, measure: obj[`strMeasure${counter}`] });
+    counter += 1;
+  });
+  return ingredientsWithMeasures;
+};
+
 function RecipeDetails() {
   const params = useParams();
   const history = useHistory();
@@ -57,24 +76,6 @@ function RecipeDetails() {
  * @param {*} obj
  * @returns INGREDIENTES AND MEASUREMENTS
  */
-  const findIngredients = (obj) => {
-    const ingredients = [];
-    const ingredientsWithMeasures = [];
-    Object.keys(obj)
-      .filter((obj1) => obj1.includes('strIngredient')).forEach((obj3) => {
-        if (obj[obj3] !== null && obj[obj3] !== '') {
-          ingredients.push(obj[obj3]);
-        }
-      });
-
-    let counter = 1;
-    ingredients.forEach((obj4, i) => {
-      if (i === 0) { counter = 1; }
-      ingredientsWithMeasures.push({ name: obj4, measure: obj[`strMeasure${counter}`] });
-      counter += 1;
-    });
-    return ingredientsWithMeasures;
-  };
 
   useEffect(() => {
     requestApi(params.id, history.location.pathname.split('/')[1]);
@@ -194,7 +195,6 @@ function RecipeDetails() {
           history.location.pathname.split('/')[1],
         ) }
         className="start-recipe"
-        saveFavorite
         type="button"
         data-testid="start-recipe-btn"
       >
