@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -8,6 +9,7 @@ function FavoriteRecipesCard(props) {
   const { recipe, index, onUnfavoriteRecipe } = props;
 
   const [isCopied, setIsCopied] = useState(false);
+  const history = useHistory();
 
   const onCopyToClipboard = () => {
     const url = window.location.origin;
@@ -19,12 +21,20 @@ function FavoriteRecipesCard(props) {
     setTimeout(() => setIsCopied(false), TWO_SECONDS);
   };
 
+  const onRedirectToDetails = () => {
+    const { id, type } = recipe;
+    history.push(`/${type}s/${id}`);
+  };
+
   return (
     <div key={ recipe.id }>
       <img
         data-testid={ `${index}-horizontal-image` }
         src={ recipe.image }
         alt={ recipe.name }
+        onClick={ onRedirectToDetails }
+        aria-hidden
+        style={ { width: '100%' } }
       />
 
       <p data-testid={ `${index}-horizontal-top-text` }>
@@ -34,7 +44,11 @@ function FavoriteRecipesCard(props) {
         { recipe.alcoholicOrNot.length > 0 && `Alcoholic - ${recipe.category}` }
       </p>
 
-      <p data-testid={ `${index}-horizontal-name` }>
+      <p
+        data-testid={ `${index}-horizontal-name` }
+        onClick={ onRedirectToDetails }
+        aria-hidden
+      >
         { recipe.name }
       </p>
 

@@ -12,6 +12,25 @@ function FavoriteRecipes() {
     setFavoriteRecipes(recipes ? JSON.parse(recipes) : []);
   }, []);
 
+  /**
+   * Filtra as receitas favoritas de acordo com o tipo
+   * @param {string} type - 'all', 'meal' or 'drink'
+   */
+  const onFilterRecipes = (type) => {
+    const recipes = localStorage.getItem('favoriteRecipes');
+    const parsedRecipes = recipes ? JSON.parse(recipes) : [];
+
+    const filteredRecipes = type === 'all'
+      ? parsedRecipes
+      : parsedRecipes.filter((recipe) => recipe.type === type);
+
+    setFavoriteRecipes(filteredRecipes);
+  };
+
+  /**
+   * Desfavorita uma receita
+   * @param {number} id - id da receita a ser desfavoritada
+   */
   const onUnfavoriteRecipe = (id) => {
     const newFavoriteRecipes = favoriteRecipes.filter((recipe) => recipe.id !== id);
     setFavoriteRecipes(newFavoriteRecipes);
@@ -23,7 +42,9 @@ function FavoriteRecipes() {
       <Header title="Favorite Recipes" />
 
       <section>
-        <FavoriteRecipesFilter />
+        <FavoriteRecipesFilter
+          onFilterRecipes={ onFilterRecipes }
+        />
 
         {favoriteRecipes.map((recipe, index) => (
           <FavoriteRecipesCard
