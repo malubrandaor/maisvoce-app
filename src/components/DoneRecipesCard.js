@@ -15,9 +15,8 @@ function DoneRecipesCard(props) {
     const { id, type } = recipe;
     navigator.clipboard.writeText(`${url}/${type}s/${id}`);
     setIsCopied(true);
-
-    const TWO_SECONDS = 2000;
-    setTimeout(() => setIsCopied(false), TWO_SECONDS);
+    // const TWO_SECONDS = 2000;
+    // setTimeout(() => setIsCopied(false), TWO_SECONDS);
   };
 
   const onRedirectToDetails = () => {
