@@ -35,6 +35,35 @@ function RecipeInProgress() {
     }
   };
 
+  const saveDoneRecipe = () => {
+    console.log(type);
+    const today = new Date();
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    const magicNumber = -1;
+    const favoriteItems = {
+      id: params.id,
+      type: history.location.pathname.split('/')[1].slice(0, magicNumber),
+      nationality: recipe.strArea || '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic || '',
+      name: recipe.strMeal || recipe.strDrink,
+      image: recipe.strMealThumb
+      || recipe.strDrinkThumb,
+      doneDate: today,
+      tags: type === 'meals' ? recipe.strTags.split(',') : [],
+    };
+    if (doneRecipes === null) {
+      localStorage.setItem('doneRecipes', JSON.stringify(
+        [favoriteItems],
+      ));
+    } else {
+      localStorage.setItem('doneRecipes', JSON.stringify(
+        [...doneRecipes, favoriteItems],
+      ));
+    }
+    history.push('/done-recipes');
+  };
+
   const saveFavorite = () => {
     const favoritesRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const magicNumber = -1;
@@ -178,6 +207,7 @@ function RecipeInProgress() {
         disabled={ ingredients.length !== findIngredients(recipe).length }
         type="button"
         data-testid="finish-recipe-btn"
+        onClick={ () => saveDoneRecipe() }
       >
         Finish Recipe
 

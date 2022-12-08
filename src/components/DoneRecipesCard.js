@@ -51,7 +51,7 @@ function DoneRecipesCard(props) {
         { recipe.name }
       </p>
 
-      { recipe.tags.splice(0, 2).map((tag) => (
+      {recipe.tags.length !== 0 && recipe.tags.map((tag) => (
         <p
           key={ tag }
           data-testid={ `${index}-${tag}-horizontal-tag` }
