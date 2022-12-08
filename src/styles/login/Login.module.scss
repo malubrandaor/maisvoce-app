@@ -1,0 +1,54 @@
+@use '../utils/colors.scss' as *;
+
+.login {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+
+  height: 100vh;
+
+  & > .background {
+    height: 50vh;
+    width: 100%;
+    background-color: $primary;
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+  }
+
+  & > .container {
+    padding: 3.2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    & input {
+      width: 100%;
+      border: .1rem solid $secondary;
+      border-radius: .8rem;
+      padding: .4rem .8rem;
+      color: $black;
+
+      &:focus {
+        outline: .2rem solid $black;
+      }
+    }
+
+    & button {
+      height: 3.4rem;
+      border: none;
+      background-color: $primary;
+      color: $white;
+      border-radius: .8rem;
+
+      &:hover {
+        background-color: lighten($primary, 10%);
+      }
+
+      &:disabled {
+        background-color: $secondary;
+        color: $black;
+        opacity: .5;
+      }
+    }
+  }
+}

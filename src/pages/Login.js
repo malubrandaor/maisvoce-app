@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import styles from '../styles/login/Login.module.scss';
+
 function Login() {
   const [email, emailChange] = useState('');
   const [password, passwordChange] = useState('');
@@ -23,35 +25,39 @@ function Login() {
   };
 
   return (
-    <div>
-      <label htmlFor="email">
-        <input
-          onChange={ ({ target }) => emailChange(target.value) }
-          data-testid="email-input"
-          placeholder="email"
-          id="email"
-          type="text"
-        />
-      </label>
-      <label htmlFor="password">
-        <input
-          onChange={ ({ target }) => passwordChange(target.value) }
-          data-testid="password-input"
-          placeholder="password"
-          id="password"
-          type="text"
-        />
-      </label>
+    <div className={ styles.login }>
+      <div className={ styles.background } />
 
-      <button
-        onClick={ saveUserLocalStorage }
-        disabled={ validadeButton() }
-        data-testid="login-submit-btn"
-        type="button"
-      >
-        Enter
+      <div className={ styles.container }>
+        <label htmlFor="email">
+          <input
+            onChange={ ({ target }) => emailChange(target.value) }
+            data-testid="email-input"
+            placeholder="email"
+            id="email"
+            type="text"
+          />
+        </label>
+        <label htmlFor="password">
+          <input
+            onChange={ ({ target }) => passwordChange(target.value) }
+            data-testid="password-input"
+            placeholder="password"
+            id="password"
+            type="text"
+          />
+        </label>
 
-      </button>
+        <button
+          onClick={ saveUserLocalStorage }
+          disabled={ validadeButton() }
+          data-testid="login-submit-btn"
+          type="button"
+        >
+          Enter
+
+        </button>
+      </div>
     </div>
   );
 }
