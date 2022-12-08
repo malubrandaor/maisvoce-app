@@ -15,9 +15,8 @@ function DoneRecipesCard(props) {
     const { id, type } = recipe;
     navigator.clipboard.writeText(`${url}/${type}s/${id}`);
     setIsCopied(true);
-
-    const TWO_SECONDS = 2000;
-    setTimeout(() => setIsCopied(false), TWO_SECONDS);
+    // const TWO_SECONDS = 2000;
+    // setTimeout(() => setIsCopied(false), TWO_SECONDS);
   };
 
   const onRedirectToDetails = () => {
@@ -51,7 +50,7 @@ function DoneRecipesCard(props) {
         { recipe.name }
       </p>
 
-      { recipe.tags.splice(0, 2).map((tag) => (
+      {recipe.tags.length !== 0 && recipe.tags.map((tag) => (
         <p
           key={ tag }
           data-testid={ `${index}-${tag}-horizontal-tag` }
