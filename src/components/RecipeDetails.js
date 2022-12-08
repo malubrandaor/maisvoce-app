@@ -89,7 +89,7 @@ function RecipeDetails() {
     if (favorites !== null) {
       setIsFavorite(favorites.some((fav) => fav.id === params.id));
     }
-  }, [isFavorite]);
+  }, [isFavorite, history.location.pathname, params.id]);
 
   function embedVideo(url) {
     const urlEmbed = `https://www.youtube.com/embed/${url.split('https://www.youtube.com/')}`;

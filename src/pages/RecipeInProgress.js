@@ -126,7 +126,7 @@ function RecipeInProgress() {
     if (favorites !== null) {
       setIsFavorite(favorites.some((fav) => fav.id === params.id));
     }
-  }, [id, recipe, type, isFavorite]);
+  }, [id, recipe, type, isFavorite, params.id]);
 
   const checkIngredient = ({ target }, idx) => {
     const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
