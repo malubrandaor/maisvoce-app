@@ -13,6 +13,7 @@ import RecipeDetails from './components/RecipeDetails';
 
 import { fetchDrinksCategories } from './app/slices/drinks';
 import { fetchMealsCategories } from './app/slices/meals';
+import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,10 +28,10 @@ function App() {
       <Route exact path="/" component={ Login } />
       <Route exact path="/meals" component={ Meals } />
       <Route exact path="/drinks" component={ Drinks } />
-      <Route path="/meals/:id" component={ RecipeDetails } />
-      <Route path="/drinks/:id" component={ RecipeDetails } />
-      <Route path="/meals/:id-da-receita/in-progress" />
-      <Route path="/drinks/:id-da-receita/in-progress" />
+      <Route exact path="/meals/:id" component={ RecipeDetails } />
+      <Route exact path="/drinks/:id" component={ RecipeDetails } />
+      <Route component={ RecipeInProgress } path="/meals/:id/in-progress" />
+      <Route component={ RecipeInProgress } path="/drinks/:id/in-progress" />
       <Route path="/profile" component={ Profile } />
       <Route path="/done-recipes" component={ DoneRecipes } />
       <Route path="/favorite-recipes" component={ FavoriteRecipes } />
