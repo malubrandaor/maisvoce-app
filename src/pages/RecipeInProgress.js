@@ -1,16 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { findIngredients } from '../components/RecipeDetails';
+import '../App.css';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
 
 function RecipeInProgress() {
+  const params = useParams();
   const [recipe, setRecipe] = useState([]);
-
+  const magic = 33;
+  const magic2 = 35;
+  const [showCoppied, setShowCoppied] = useState(false);
   const [ingredients, setIngredients] = useState([]);
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const [, setNewIngredients] = useState([]);
 
   const history = useHistory();
 
   const type = history.location.pathname.split('/')[1];
   const id = history.location.pathname.split('/')[2];
+
+  const removeFavorite = (arr, idRecip) => {
+    if (isFavorite) {
+      localStorage
+        .setItem('favoriteRecipes', JSON.stringify(
+          arr.filter((a) => a.id !== idRecip),
+        ));
+      setIsFavorite(false);
+    }
+  };
+
+  const saveFavorite = () => {
+    const favoritesRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const magicNumber = -1;
+    const favoriteItems = {
+      id: params.id,
+      type: history.location.pathname.split('/')[1].slice(0, magicNumber),
+      nationality: recipe.strArea || '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic || '',
+      name: recipe.strMeal || recipe.strDrink,
+      image: recipe.strMealThumb
+      || recipe.strDrinkThumb,
+    };
+    if (favoritesRecipes === null) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(
+        [favoriteItems],
+      ));
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(
+        [...favoritesRecipes, favoriteItems],
+      ));
+    }
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorites !== null) {
+      setIsFavorite(favorites.some((fav) => fav.id === params.id));
+    }
+    removeFavorite(favorites, params.id);
+  };
 
   const requestApi = async (idRecipe, typeRecipe) => {
     if (typeRecipe === 'meals') {
@@ -34,15 +86,18 @@ function RecipeInProgress() {
       localStorage.setItem(
         'inProgressRecipes',
         JSON.stringify({ [type]: { [id]: findIngredients(recipe) } }),
-
+        setNewIngredients(JSON.parse(localStorage.getItem('inProgressRecipes'))),
       );
     }
 
-    console.log(JSON.parse(localStorage.getItem('inProgressRecipes')));
     if (recipe.length === 0) {
       requestApi(id, type);
     }
-  }, [recipe, ingredients]);
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorites !== null) {
+      setIsFavorite(favorites.some((fav) => fav.id === params.id));
+    }
+  }, [id, recipe, type, isFavorite]);
 
   const checkIngredient = ({ target }, idx) => {
     const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -55,9 +110,6 @@ function RecipeInProgress() {
     }
 
     localStorage.setItem('inProgressRecipes', JSON.stringify(localStorageRecipes));
-
-    // console.log(JSON.parse(localStorage.getItem('inProgressRecipes')));
-    console.log(JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]);
   };
 
   return (
@@ -102,16 +154,34 @@ function RecipeInProgress() {
       </ul>
 
       <p data-testid="instructions">{recipe.strInstructions}</p>
-
+      {showCoppied && <div role="alert">Link copied!</div> }
       <button
         style={ { marginBottom: '100px' } }
+        onClick={ () => {
+          copy(type === 'meals' ? window.location.href.slice(0, magic)
+            : window.location.href.slice(0, magic2));
+          setShowCoppied(true);
+        } }
         type="button"
         data-testid="share-btn"
       >
-        Share
+        <img data-testid="share-icon" alt="share" src={ shareIcon } />
       </button>
-      <button data-testid="favorite-btn" type="button">Favorite</button>
-      <button type="button" data-testid="finish-recipe-btn">Finish Recipe</button>
+      <img
+        aria-hidden
+        onClick={ () => saveFavorite() }
+        data-testid="favorite-btn"
+        alt="favorite"
+        src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+      />
+      <button
+        disabled={ ingredients.length !== findIngredients(recipe).length }
+        type="button"
+        data-testid="finish-recipe-btn"
+      >
+        Finish Recipe
+
+      </button>
     </div>
 
   );
