@@ -22,6 +22,14 @@ function Footer() {
       className={ styles.footer }
     >
       <img
+        src={ mealIcon }
+        alt="Meal Icon"
+        onClick={ routeMeal }
+        aria-hidden
+        data-testid="meals-bottom-btn"
+      />
+
+      <img
         src={ drinkIcon }
         alt="Drink Icon"
         onClick={ routeDrink }
@@ -29,13 +37,6 @@ function Footer() {
         data-testid="drinks-bottom-btn"
       />
 
-      <img
-        src={ mealIcon }
-        alt="Meal Icon"
-        onClick={ routeMeal }
-        aria-hidden
-        data-testid="meals-bottom-btn"
-      />
     </div>
   );
 }

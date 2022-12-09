@@ -48,7 +48,7 @@ function Login() {
             data-testid="password-input"
             placeholder="password"
             id="password"
-            type="text"
+            type="password"
           />
         </label>
 

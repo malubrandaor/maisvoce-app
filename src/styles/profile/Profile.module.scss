@@ -1,0 +1,52 @@
+@use '../utils/colors' as *;
+
+.profile {
+  & > .main {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3.2rem;
+    align-items: center;
+
+    padding: 6.4rem;
+
+    & > span {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: $black;
+      font-weight: 600;
+      margin-bottom: 3.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    & > label {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      padding-bottom: 3.2rem;
+      color: $black;
+
+      & > img {
+        width: 3.2rem;
+        height: 3.2rem;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $secondary;;
+      }
+    }
+
+    & > .done {
+      grid-column: 1 / -1;
+    }
+
+    & > .favorite {
+      grid-column: 1 / -1;
+    }
+
+    & > .logout {
+      grid-column: 1 / -1;
+    }
+  }
+}
