@@ -1,6 +1,11 @@
 import { useHistory } from 'react-router-dom';
 import '../App.css'; // import do hook
 
+import drinkIcon from '../images/drinkIcon.svg';
+import mealIcon from '../images/mealIcon.svg';
+
+import styles from '../styles/footer/Footer.module.scss';
+
 function Footer() {
   const history = useHistory();
 
@@ -12,28 +17,25 @@ function Footer() {
   }
 
   return (
-    <div data-testid="footer" className="divFooter">
-      <button
+    <div
+      data-testid="footer"
+      className={ styles.footer }
+    >
+      <img
+        src={ drinkIcon }
+        alt="Drink Icon"
         onClick={ routeDrink }
-        type="button"
-      >
-        <img
-          src="../images/drinkIcon.svg"
-          alt="Drink Icon"
-          data-testid="drinks-bottom-btn"
-        />
-      </button>
-      <button
-        onClick={ routeMeal }
-        type="button"
-      >
-        <img
-          src="../images/mealIcon.svg"
-          alt="Meal Icon"
-          data-testid="meals-bottom-btn"
-        />
-      </button>
+        aria-hidden
+        data-testid="drinks-bottom-btn"
+      />
 
+      <img
+        src={ mealIcon }
+        alt="Meal Icon"
+        onClick={ routeMeal }
+        aria-hidden
+        data-testid="meals-bottom-btn"
+      />
     </div>
   );
 }

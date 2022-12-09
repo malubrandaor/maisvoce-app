@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import logo from '../images/maisvocelogo.svg';
+
 import styles from '../styles/login/Login.module.scss';
 
 function Login() {
@@ -26,7 +28,9 @@ function Login() {
 
   return (
     <div className={ styles.login }>
-      <div className={ styles.background } />
+      <div className={ styles.background }>
+        <img src={ logo } alt="mais voce logo" />
+      </div>
 
       <div className={ styles.container }>
         <label htmlFor="email">

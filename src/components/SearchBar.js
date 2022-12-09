@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { fetchDrinks } from '../app/slices/drinks';
 import { fetchMeals } from '../app/slices/meals';
 
+import styles from '../styles/header/SearchBar.module.scss';
+
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('');
@@ -56,17 +58,18 @@ function SearchBar() {
   };
 
   return (
-    <div>
+    <div className={ styles.searchbar }>
       <input
         type="text"
         name="search"
         id="search"
+        placeholder='Ex: "Lemon"'
         value={ searchTerm }
         data-testid="search-input"
         onChange={ (e) => onSearchRecipes(e) }
       />
 
-      <div>
+      <div className={ styles.controls }>
         <label htmlFor="ingredient">
           <input
             type="radio"
@@ -102,15 +105,15 @@ function SearchBar() {
           />
           First Letter
         </label>
-      </div>
 
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ () => onSearch() }
-      >
-        Buscar
-      </button>
+        <button
+          type="button"
+          data-testid="exec-search-btn"
+          onClick={ () => onSearch() }
+        >
+          Buscar
+        </button>
+      </div>
     </div>
   );
 }

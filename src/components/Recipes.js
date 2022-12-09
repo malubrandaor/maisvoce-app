@@ -8,6 +8,8 @@ import DrinksCategories from './DrinksCategories';
 import MealsCategories from './MealsCategories';
 import RecipeCard from './RecipeCard';
 
+import styles from '../styles/recipes/Recipes.module.scss';
+
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -60,20 +62,22 @@ function Recipes() {
   }, [meals.data, meals.categories, drinks.data, drinks.categories, isMeals, isDrinks]);
 
   return (
-    <main>
-      <section>
+    <main className={ styles.recipes }>
+      <section className={ styles.categories }>
         {isMeals && <MealsCategories fetchByCategory={ fetchByCategory } />}
         {isDrinks && <DrinksCategories fetchByCategory={ fetchByCategory } />}
       </section>
 
-      {recipes.slice(0, maxSize)
-        .map((recipe, idx) => (
-          <RecipeCard
-            key={ recipe.idMeal || recipe.idDrink }
-            recipe={ recipe }
-            index={ idx }
-          />
-        ))}
+      <div className={ styles.meals }>
+        {recipes.slice(0, maxSize)
+          .map((recipe, idx) => (
+            <RecipeCard
+              key={ recipe.idMeal || recipe.idDrink }
+              recipe={ recipe }
+              index={ idx }
+            />
+          ))}
+      </div>
     </main>
   );
 }

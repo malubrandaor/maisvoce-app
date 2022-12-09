@@ -1,0 +1,27 @@
+@use '../utils/colors.scss' as *;
+
+.header {
+  background-color: $primary;
+  color: $white;
+  padding: 1.6rem;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.6rem;
+  
+  & > .logo {
+    height: 3.2rem;
+  }
+
+  & > .nav {
+    display: flex;
+    gap: 1.6rem;
+
+    & > img {
+      filter: invert(1);
+      height: 2.4rem;
+      width: 2.4rem;
+    }
+  }
+}
