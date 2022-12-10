@@ -1,0 +1,161 @@
+@use '../utils/colors.scss' as *;
+
+.recipe_details {
+  & > header {
+    position: relative;
+
+    & > .background {
+      width: 100vw;
+      height: 20rem;
+      background: radial-gradient(rgba($black, 0.1), rgba($black, 0.7));
+      position: absolute;
+    }
+
+    & > .back {
+      height: 2.2rem;
+      width: 2.2rem;
+      position: absolute;
+      top: 1.6rem;
+      left: 1.6rem;
+      z-index: 999;
+    }
+
+    & > img {
+      width: 100%;
+      height: 20rem;
+      object-fit: cover;
+    }
+
+    & > h1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      text-align: center;
+      color: $white;
+      font-size: 2.8rem;
+      font-weight: 900;
+      text-shadow: 0 0 .8rem $black;
+
+      width: 80%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    & > p {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      color: $white;
+      font-size: 1.6rem;
+      font-weight: 600;
+      text-shadow: 0 0 1.6rem $black;
+    }
+
+    & > .copy {
+      position: absolute;
+      top: 1.6rem;
+      right: 9.2rem;
+      color: $white;
+      font-size: 1.4rem;
+    }
+
+    & > .buttons {
+      position: absolute;
+      top: 1.6rem;
+      right: 1.6rem;
+
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+
+      & > img {
+        filter: invert(1);
+        height: 2.2rem;
+        width: 2.2rem;
+      }
+    }
+  }
+
+  & > .ingredients {
+    padding: 1.6rem;
+    margin: 1.6rem;
+    border: .1rem solid $secondary;
+    border-radius: .8rem;
+
+    & > p {
+      color: $black;
+      margin: 0;
+
+      &:not(:last-child) {
+        margin-bottom: 1.6rem;
+      }
+    }
+  }
+
+  & > .instructions {
+    padding: 1.6rem 1.6rem 1.6rem 1.6rem;
+    margin: 1.6rem;
+    border: .1rem solid $secondary;
+    border-radius: .8rem;
+    color: $black;
+    white-space: pre-line;
+
+    & > span {
+      display: block;
+      font-size: 1.6rem;
+      margin-bottom: 1.6rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  & > iframe {
+    width: 100%;
+    height: 22rem;
+    margin-bottom: 1.6rem;
+  }
+
+  & > .slider {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    gap: 1.4rem;
+
+    overflow-x: scroll;
+    padding: 0 1.6rem;
+    margin-bottom: 1.6rem;
+
+    & > div {
+      width: 45vw;
+      border: 1px solid lighten($secondary, 28%);
+      border-radius: .8rem;
+      overflow: hidden;
+      
+      & > img {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      & > p {
+        padding: 0 .8rem;
+        color: $black;
+      }
+    }
+  }
+
+  & > .start {
+    width: 100%;
+    border: none;
+    background-color: $primary;
+    color: $white;
+    padding: .8rem;
+    box-shadow: 0 0 1.6rem rgba($black, .2);
+  }
+}
