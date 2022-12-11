@@ -1,0 +1,97 @@
+@use '../utils/colors' as *;
+
+.recipe_card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: repeat(4, auto);
+  align-items: center;
+  column-gap: 1.6rem;
+
+  padding-right: 1.6rem;
+  border: .1rem solid lighten($secondary, 28%);
+  border-radius: .8rem;
+  overflow: hidden;  
+
+  position: relative;
+  
+  & p {
+    margin: 0;
+    color: $black;
+  }
+
+  & > .image {
+    height: 15rem;
+    object-fit: cover;
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
+  }
+
+  & > .name {
+    font-size: 1.6rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 5.6rem;
+  }
+
+  & > .category {
+    font-size: 1.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  & > .tags {
+    display: flex;
+    gap: .4rem;
+
+    & > p {
+      font-size: 1rem;
+      color: $secondary;
+      border: .1rem solid $secondary;
+      border-radius: .8rem;
+      padding: .4rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  & > .share {
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    top: 1.4rem;
+    right: 1.6rem;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: end;
+    gap: 1.6rem;
+
+    & > img {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+
+    & > .copy {
+      position: absolute;
+      font-size: 1.2rem;
+      bottom: 1.6rem !important;
+      right: 9.6rem;
+    }
+  }
+
+  & > .copy {
+    position: absolute;
+    font-size: 1.2rem;
+    top: 4.8rem;
+    right: 1.6rem;
+  }
+}
+
+.favorite {
+  grid-template-rows: repeat(3, auto);
+}

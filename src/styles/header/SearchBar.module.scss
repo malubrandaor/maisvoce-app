@@ -31,6 +31,14 @@
       display: flex;
       align-items: center;
       gap: .4rem;
+
+      &:nth-child(2) {
+        justify-self: center;
+      }
+
+      &:nth-child(3) {
+        justify-self: end;
+      }
     }
 
     & > button {

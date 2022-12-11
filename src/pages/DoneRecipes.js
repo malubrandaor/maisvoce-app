@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import DoneRecipesCard from '../components/DoneRecipesCard';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipesFilter from '../components/RecipesFilter';
+
+import styles from '../styles/recipes/DoneRecipes.module.scss';
 
 function DoneRecipes() {
   const [doneRecipes, setDoneRecipes] = useState([]);
@@ -27,21 +30,25 @@ function DoneRecipes() {
   };
 
   return (
-    <>
+    <section className={ styles.done_recipes }>
       <Header title="Done Recipes" />
 
-      <RecipesFilter
-        onFilterRecipes={ onFilterRecipes }
-      />
+      <section>
+        <RecipesFilter onFilterRecipes={ onFilterRecipes } />
 
-      { doneRecipes.map((recipe, index) => (
-        <DoneRecipesCard
-          key={ recipe.id }
-          recipe={ recipe }
-          index={ index }
-        />
-      ))}
-    </>
+        <div className={ styles.cards }>
+          {doneRecipes.map((recipe, index) => (
+            <DoneRecipesCard
+              key={ recipe.id }
+              recipe={ recipe }
+              index={ index }
+            />
+          ))}
+        </div>
+      </section>
+
+      <Footer />
+    </section>
   );
 }
 

@@ -177,22 +177,18 @@ function RecipeDetails() {
           aria-hidden
         />
       </header>
-
+      <h3>Ingredients</h3>
       <div className={ styles.ingredients }>
         {findIngredients(recipe).map((ingredient, i) => (
           <p data-testid={ `${i}-ingredient-name-and-measure` } key={ i }>
             {`${ingredient.name} ${ingredient.measure}`}
           </p>))}
       </div>
+      <h3>Instructions</h3>
       <p
         data-testid="instructions"
         className={ styles.instructions }
       >
-        {/* {recipe.strInstructions?.split('.').map((instruction, i) => (
-          <span key={ i }>
-            {`${instruction}`}
-          </span>
-        ))} */}
         {recipe.strInstructions?.replaceAll(/(\d+)\./g, '\n')}
       </p>
       {recipe.strYoutube && <iframe

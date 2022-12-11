@@ -50,7 +50,7 @@ function RecipeInProgress() {
       image: recipe.strMealThumb
       || recipe.strDrinkThumb,
       doneDate: today,
-      tags: type === 'meals' ? recipe.strTags.split(',') : [],
+      tags: type === 'meals' ? recipe.strTags?.split(',') : [],
     };
     if (doneRecipes === null) {
       localStorage.setItem('doneRecipes', JSON.stringify(

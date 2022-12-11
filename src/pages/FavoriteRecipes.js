@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import RecipesFilter from '../components/RecipesFilter';
 import Header from '../components/Header';
-
 import FavoriteRecipesCard from '../components/FavoriteRecipesCard';
+import Footer from '../components/Footer';
+
+import styles from '../styles/recipes/FavoriteRecipes.module.scss';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -38,24 +40,26 @@ function FavoriteRecipes() {
   };
 
   return (
-    <>
+    <section className={ styles.favorite_recipes }>
       <Header title="Favorite Recipes" />
 
       <section>
-        <RecipesFilter
-          onFilterRecipes={ onFilterRecipes }
-        />
+        <RecipesFilter onFilterRecipes={ onFilterRecipes } />
 
-        {favoriteRecipes.map((recipe, index) => (
-          <FavoriteRecipesCard
-            key={ recipe.id }
-            recipe={ recipe }
-            index={ index }
-            onUnfavoriteRecipe={ onUnfavoriteRecipe }
-          />
-        ))}
+        <div className={ styles.cards }>
+          {favoriteRecipes.map((recipe, index) => (
+            <FavoriteRecipesCard
+              key={ recipe.id }
+              recipe={ recipe }
+              index={ index }
+              onUnfavoriteRecipe={ onUnfavoriteRecipe }
+            />
+          ))}
+        </div>
       </section>
-    </>
+
+      <Footer />
+    </section>
   );
 }
 
