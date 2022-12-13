@@ -9,6 +9,7 @@ import MealsCategories from './MealsCategories';
 import RecipeCard from './RecipeCard';
 
 import styles from '../styles/recipes/Recipes.module.scss';
+import Loading from './Loading';
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);
@@ -61,6 +62,8 @@ function Recipes() {
     }
   }, [meals.data, meals.categories, drinks.data, drinks.categories, isMeals, isDrinks]);
 
+  const IS_LOADING = meals.loading || drinks.loading;
+
   return (
     <main className={ styles.recipes }>
       <section className={ styles.categories }>
@@ -69,7 +72,9 @@ function Recipes() {
       </section>
 
       <div className={ styles.meals }>
-        {recipes.slice(0, maxSize)
+        {IS_LOADING && <Loading />}
+
+        {!IS_LOADING && recipes.slice(0, maxSize)
           .map((recipe, idx) => (
             <RecipeCard
               key={ recipe.idMeal || recipe.idDrink }

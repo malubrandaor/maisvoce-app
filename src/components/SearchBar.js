@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchDrinks } from '../app/slices/drinks';
@@ -6,7 +7,9 @@ import { fetchMeals } from '../app/slices/meals';
 
 import styles from '../styles/header/SearchBar.module.scss';
 
-function SearchBar() {
+function SearchBar(props) {
+  const { isSearching } = props;
+
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('');
   const history = useHistory();
@@ -58,7 +61,7 @@ function SearchBar() {
   };
 
   return (
-    <div className={ styles.searchbar }>
+    <div className={ `${styles.searchbar} ${isSearching && styles.show}` }>
       <input
         type="text"
         name="search"
@@ -117,5 +120,9 @@ function SearchBar() {
     </div>
   );
 }
+
+SearchBar.propTypes = {
+  isSearching: PropTypes.bool.isRequired,
+};
 
 export default SearchBar;

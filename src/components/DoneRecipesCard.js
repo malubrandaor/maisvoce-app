@@ -43,13 +43,13 @@ function DoneRecipesCard(props) {
     <div
       key={ recipe.id }
       className={ styles.recipe_card }
+      onClick={ onRedirectToDetails }
+      aria-hidden
     >
       <img
         data-testid={ `${index}-horizontal-image` }
         src={ recipe.image }
         alt={ recipe.name }
-        onClick={ onRedirectToDetails }
-        aria-hidden
         className={ styles.image }
       />
 

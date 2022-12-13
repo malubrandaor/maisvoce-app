@@ -24,6 +24,8 @@ function Header(props) {
           src={ logo }
           alt="mais voce logo"
           className={ styles.logo }
+          onClick={ () => history.push('/meals') }
+          aria-hidden
         />
 
         <h1 data-testid="page-title">{ title }</h1>
@@ -50,7 +52,8 @@ function Header(props) {
         </div>
       </header>
 
-      {isSearching ? <SearchBar /> : null}
+      {/* {isSearching ? <SearchBar isSearching={ isSearching } /> : null} */}
+      <SearchBar isSearching={ isSearching } />
     </>
   );
 }

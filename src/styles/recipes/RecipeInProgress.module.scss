@@ -1,6 +1,6 @@
-@use '../utils/colors.scss' as *;
+@use '../utils/colors' as *;
 
-.recipe_details {
+.recipe_in_progress {
   position: relative;
 
   & > header {
@@ -97,19 +97,23 @@
     border: .1rem solid $secondary;
     border-radius: .8rem;
 
-    & > p {
-      color: $black;
-      margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
 
-      &:not(:last-child) {
-        margin-bottom: 1.6rem;
+    & > li {
+      & > label {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
       }
     }
   }
 
   & > .instructions {
     padding: 1.6rem 1.6rem 1.6rem 1.6rem;
-    margin: 1.6rem 1.6rem 3.2rem 1.6rem;
+    margin: 1.6rem 1.6rem 6.4rem 1.6rem;
     border: .1rem solid $secondary;
     border-radius: .8rem;
     color: $black;
@@ -126,41 +130,7 @@
     }
   }
 
-  & > iframe {
-    width: 100%;
-    height: 22rem;
-    margin-bottom: 3.2rem;
-  }
-
-  & > .slider {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(6, auto);
-    gap: 1.4rem;
-
-    overflow-x: scroll;
-    padding: 0 1.6rem;
-    margin-bottom: 6.4rem;
-
-    & > div {
-      width: 45vw;
-      border: 1px solid lighten($secondary, 28%);
-      border-radius: .8rem;
-      overflow: hidden;
-      
-      & > img {
-        width: 100%;
-        margin-bottom: 1rem;
-      }
-
-      & > p {
-        padding: 0 .8rem;
-        color: $black;
-      }
-    }
-  }
-
-  & > .start {
+  & > .finish {
     width: 100%;
     border: none;
     background-color: $primary;
@@ -170,5 +140,10 @@
 
     position: fixed;
     bottom: 0;
+
+    &:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
   }
 }

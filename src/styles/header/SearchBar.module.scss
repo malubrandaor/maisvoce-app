@@ -1,8 +1,10 @@
 @use '../utils/colors' as *;
 
 .searchbar {
-  display: grid;
+  display: none;
   padding: 1.6rem 1.6rem 0 1.6rem;
+
+  transition: 1s all;
 
   & > input {
     padding: .8rem;
@@ -51,4 +53,9 @@
       border-radius: .8rem;
     }
   }
+}
+
+.show {
+  display: grid;
+  transition: 1s all ease-in-out;
 }

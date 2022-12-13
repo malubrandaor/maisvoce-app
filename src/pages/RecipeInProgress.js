@@ -5,6 +5,9 @@ import '../App.css';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import arrowBackIcon from '../images/arrowBack.png';
+
+import styles from '../styles/recipes/RecipeInProgress.module.scss';
 
 const copy = require('clipboard-copy');
 
@@ -36,7 +39,6 @@ function RecipeInProgress() {
   };
 
   const saveDoneRecipe = () => {
-    console.log(type);
     const today = new Date();
     const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     const magicNumber = -1;
@@ -141,21 +143,56 @@ function RecipeInProgress() {
     localStorage.setItem('inProgressRecipes', JSON.stringify(localStorageRecipes));
   };
 
+  const TWO_SECONDS = 2000;
+
   return (
-    <div>
-      <img
-        data-testid="recipe-photo"
-        alt="recipeImage"
-        src={ recipe.strMealThumb
-           || recipe.strDrinkThumb }
-      />
+    <div className={ styles.recipe_in_progress }>
+      <header>
+        <div className={ styles.background } />
+        <img
+          data-testid="recipe-photo"
+          alt="recipeImage"
+          src={ recipe.strMealThumb || recipe.strDrinkThumb }
+          className={ styles.recipe_image }
+        />
+        <h1 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h1>
+        <p data-testid="recipe-category">
+          {`${recipe.strCategory} ${recipe.strAlcoholic || ''}`}
+        </p>
+        {showCoppied && <div className={ styles.copy }>Link copied!</div> }
 
-      <h1 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h1>
+        <div className={ styles.buttons }>
+          <img
+            data-testid="share-icon"
+            onClick={ () => {
+              copy(type === 'meals' ? window.location.href.slice(0, magic)
+                : window.location.href.slice(0, magic2));
+              setShowCoppied(true);
+              setTimeout(() => setShowCoppied(false), TWO_SECONDS);
+            } }
+            aria-hidden
+            alt="share"
+            src={ shareIcon }
+          />
+          <img
+            aria-hidden
+            onClick={ () => saveFavorite() }
+            data-testid="favorite-btn"
+            alt="favorite"
+            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          />
+        </div>
+        <img
+          src={ arrowBackIcon }
+          alt="back icon"
+          className={ styles.back }
+          onClick={ () => history.goBack() }
+          aria-hidden
+        />
+      </header>
 
-      <p data-testid="recipe-category">
-        {`${recipe.strCategory} ${recipe.strAlcoholic}`}
-      </p>
-      <ul>
+      <h3>Ingredients</h3>
+      <ul className={ styles.ingredients }>
         {localStorage.getItem('inProgressRecipes')
         && JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]
           .map((ingredient, idx) => (
@@ -169,45 +206,34 @@ function RecipeInProgress() {
                 htmlFor={ `${idx}-ingredient` }
                 data-testid={ `${idx}-ingredient-step` }
               >
-                {ingredient.name}
-                {ingredient.measure}
                 <input
                   checked={ ingredient.checked }
                   id={ `${idx}-ingredient` }
-                  onChange={ (target) => checkIngredient(target, idx) }
+                  onClick={ (target) => checkIngredient(target, idx) }
                   type="checkbox"
                 />
+                {ingredient.name}
+                &nbsp;-&nbsp;
+                {ingredient.measure}
               </label>
             </li>
           ))}
       </ul>
 
-      <p data-testid="instructions">{recipe.strInstructions}</p>
-      {showCoppied && <div role="alert">Link copied!</div> }
-      <button
-        style={ { marginBottom: '100px' } }
-        onClick={ () => {
-          copy(type === 'meals' ? window.location.href.slice(0, magic)
-            : window.location.href.slice(0, magic2));
-          setShowCoppied(true);
-        } }
-        type="button"
-        data-testid="share-btn"
+      <h3>Instructions</h3>
+      <p
+        data-testid="instructions"
+        className={ styles.instructions }
       >
-        <img data-testid="share-icon" alt="share" src={ shareIcon } />
-      </button>
-      <img
-        aria-hidden
-        onClick={ () => saveFavorite() }
-        data-testid="favorite-btn"
-        alt="favorite"
-        src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-      />
+        {recipe.strInstructions?.replaceAll(/(\d+)\./g, '\n')}
+      </p>
+
       <button
         disabled={ ingredients.length !== findIngredients(recipe).length }
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ () => saveDoneRecipe() }
+        className={ styles.finish }
       >
         Finish Recipe
 

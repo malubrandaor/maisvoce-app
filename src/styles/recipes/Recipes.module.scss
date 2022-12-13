@@ -1,7 +1,8 @@
 @use '../utils/colors.scss' as *;
 
 .recipes {
-  margin-top: 1.6rem;
+  display: grid;
+  justify-items: center;
 
   & > .categories {
     width: 100%;

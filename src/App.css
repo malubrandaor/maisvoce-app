@@ -70,28 +70,3 @@ h1, h2, h3, h4, h5, h6 {
     transform: rotate(-10deg);
   }
 }
-
-.divFooter {
-  bottom: 0;
-  position: fixed;
-}
-
-.slider {
-  background-color: red;
-  display: flex;
-  gap: 16px;
-  height: 160px;
-  overflow-x: scroll;
-  width: 360px;
-}
-
-
-.slider div {
-  border: 2px solid red;
-  width: 50%;
-}
-
-.start-recipe {
-  bottom: 0;
-  position: fixed;
-}

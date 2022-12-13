@@ -131,6 +131,12 @@ function RecipeDetails() {
     }
     removeFavorite(favorites, params.id);
   };
+
+  const redirect = (r) => {
+    if (r.idMeal) history.push(`/meals/${r.idMeal}`);
+    if (r.idDrink) history.push(`/drinks/${r.idDrink}`);
+  };
+
   const TWO_SECONDS = 2000;
   return (
     <div className={ styles.recipe_details }>
@@ -203,6 +209,8 @@ function RecipeDetails() {
             <div
               data-testid={ `${index}-recommendation-card` }
               key={ recomendation.strMeal || recomendation.strDrink }
+              onClick={ () => redirect(recomendation) }
+              aria-hidden
             >
               <img
                 alt="recipeImage"

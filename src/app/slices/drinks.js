@@ -61,6 +61,7 @@ const recipesSlice = createSlice({
       .addCase(fetchDrinks.pending, (state) => {
         state.loading = true;
       })
+
       .addCase(fetchDrinks.fulfilled, (state, action) => {
         if (action.payload.drinks === null) {
           global.alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -71,22 +72,27 @@ const recipesSlice = createSlice({
         state.data = action.payload.drinks;
         state.loading = false;
       })
+
       .addCase(fetchDrinks.rejected, (state) => {
         state.loading = false;
         state.data = [];
         global.alert('Sorry, we haven\'t found any recipes for these filters.');
       })
+
       .addCase(fetchDrinksByCategory.pending, (state) => {
         state.loading = true;
       })
+
       .addCase(fetchDrinksByCategory.fulfilled, (state, action) => {
         state.data = action.payload.drinks;
         state.loading = false;
       })
+
       .addCase(fetchDrinksByCategory.rejected, (state) => {
         state.loading = false;
         state.data = [];
       })
+
       .addCase(fetchDrinksCategories.fulfilled, (state, action) => {
         state.categories = action.payload;
       });

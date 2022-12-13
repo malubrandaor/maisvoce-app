@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import DoneRecipes from './pages/DoneRecipes';
@@ -11,18 +10,9 @@ import Meals from './pages/Meals';
 import Profile from './pages/Profile';
 import RecipeDetails from './components/RecipeDetails';
 
-import { fetchDrinksCategories } from './app/slices/drinks';
-import { fetchMealsCategories } from './app/slices/meals';
 import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchDrinksCategories());
-    dispatch(fetchMealsCategories());
-  }, [dispatch]);
-
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
