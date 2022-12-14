@@ -51,11 +51,17 @@ const initialState = {
   loading: false,
   data: [],
   categories: [],
+  activeCategory: 'All',
 };
 
 const recipesSlice = createSlice({
   name: 'recipes',
   initialState,
+  reducers: {
+    setCategory: (state, action) => {
+      state.activeCategory = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchDrinks.pending, (state) => {
@@ -98,5 +104,7 @@ const recipesSlice = createSlice({
       });
   },
 });
+
+export const { setCategory } = recipesSlice.actions;
 
 export default recipesSlice.reducer;

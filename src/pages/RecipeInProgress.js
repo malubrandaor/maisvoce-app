@@ -8,6 +8,7 @@ import shareIcon from '../images/shareIcon.svg';
 import arrowBackIcon from '../images/arrowBack.png';
 
 import styles from '../styles/recipes/RecipeInProgress.module.scss';
+import Loading from '../components/Loading';
 
 const copy = require('clipboard-copy');
 
@@ -18,13 +19,10 @@ function RecipeInProgress() {
   const magic2 = 35;
   const [showCoppied, setShowCoppied] = useState(false);
   const [ingredients, setIngredients] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-
   const [, setNewIngredients] = useState([]);
-
   const history = useHistory();
-
   const type = history.location.pathname.split('/')[1];
   const id = history.location.pathname.split('/')[2];
 
@@ -101,6 +99,7 @@ function RecipeInProgress() {
       fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJson = await response.json();
       setRecipe(responseJson.meals[0]);
+      setIsLoading(false);
     }
 
     if (typeRecipe === 'drinks') {
@@ -108,6 +107,7 @@ function RecipeInProgress() {
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idRecipe}`);
       const responseJson = await response.json();
       setRecipe(responseJson.drinks[0]);
+      setIsLoading(false);
     }
   };
 
@@ -147,53 +147,57 @@ function RecipeInProgress() {
 
   return (
     <div className={ styles.recipe_in_progress }>
-      <header>
-        <div className={ styles.background } />
-        <img
-          data-testid="recipe-photo"
-          alt="recipeImage"
-          src={ recipe.strMealThumb || recipe.strDrinkThumb }
-          className={ styles.recipe_image }
-        />
-        <h1 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h1>
-        <p data-testid="recipe-category">
-          {`${recipe.strCategory} ${recipe.strAlcoholic || ''}`}
-        </p>
-        {showCoppied && <div className={ styles.copy }>Link copied!</div> }
+      {isLoading && <Loading />}
 
-        <div className={ styles.buttons }>
-          <img
-            data-testid="share-icon"
-            onClick={ () => {
-              copy(type === 'meals' ? window.location.href.slice(0, magic)
-                : window.location.href.slice(0, magic2));
-              setShowCoppied(true);
-              setTimeout(() => setShowCoppied(false), TWO_SECONDS);
-            } }
-            aria-hidden
-            alt="share"
-            src={ shareIcon }
-          />
-          <img
-            aria-hidden
-            onClick={ () => saveFavorite() }
-            data-testid="favorite-btn"
-            alt="favorite"
-            src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-          />
-        </div>
-        <img
-          src={ arrowBackIcon }
-          alt="back icon"
-          className={ styles.back }
-          onClick={ () => history.goBack() }
-          aria-hidden
-        />
-      </header>
+      {!isLoading && (
+        <>
+          <header>
+            <div className={ styles.background } />
+            <img
+              data-testid="recipe-photo"
+              alt="recipeImage"
+              src={ recipe.strMealThumb || recipe.strDrinkThumb }
+              className={ styles.recipe_image }
+            />
+            <h1 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h1>
+            <p data-testid="recipe-category">
+              {`${recipe.strCategory} ${recipe.strAlcoholic || ''}`}
+            </p>
+            {showCoppied && <div className={ styles.copy }>Link copied!</div> }
 
-      <h3>Ingredients</h3>
-      <ul className={ styles.ingredients }>
-        {localStorage.getItem('inProgressRecipes')
+            <div className={ styles.buttons }>
+              <img
+                data-testid="share-icon"
+                onClick={ () => {
+                  copy(type === 'meals' ? window.location.href.slice(0, magic)
+                    : window.location.href.slice(0, magic2));
+                  setShowCoppied(true);
+                  setTimeout(() => setShowCoppied(false), TWO_SECONDS);
+                } }
+                aria-hidden
+                alt="share"
+                src={ shareIcon }
+              />
+              <img
+                aria-hidden
+                onClick={ () => saveFavorite() }
+                data-testid="favorite-btn"
+                alt="favorite"
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+              />
+            </div>
+            <img
+              src={ arrowBackIcon }
+              alt="back icon"
+              className={ styles.back }
+              onClick={ () => history.goBack() }
+              aria-hidden
+            />
+          </header>
+
+          <h3>Ingredients</h3>
+          <ul className={ styles.ingredients }>
+            {localStorage.getItem('inProgressRecipes')
         && JSON.parse(localStorage.getItem('inProgressRecipes'))[type][id]
           .map((ingredient, idx) => (
             <li key={ idx }>
@@ -218,26 +222,25 @@ function RecipeInProgress() {
               </label>
             </li>
           ))}
-      </ul>
+          </ul>
 
-      <h3>Instructions</h3>
-      <p
-        data-testid="instructions"
-        className={ styles.instructions }
-      >
-        {recipe.strInstructions?.replaceAll(/(\d+)\./g, '\n')}
-      </p>
-
-      <button
-        disabled={ ingredients.length !== findIngredients(recipe).length }
-        type="button"
-        data-testid="finish-recipe-btn"
-        onClick={ () => saveDoneRecipe() }
-        className={ styles.finish }
-      >
-        Finish Recipe
-
-      </button>
+          <h3>Instructions</h3>
+          <p
+            data-testid="instructions"
+            className={ styles.instructions }
+          >
+            {recipe.strInstructions?.replaceAll(/(\d+)\./g, '\n')}
+          </p>
+          <button
+            disabled={ ingredients.length !== findIngredients(recipe).length }
+            type="button"
+            data-testid="finish-recipe-btn"
+            onClick={ () => saveDoneRecipe() }
+            className={ styles.finish }
+          >
+            Finish Recipe
+          </button>
+        </>)}
     </div>
 
   );

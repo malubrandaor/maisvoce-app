@@ -28,6 +28,15 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
+.selected {
+  background-color: #BC9975;
+  color: white !important;
+}
+
+.selected img {
+  filter: brightness(0) invert(1);
+}
+
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;

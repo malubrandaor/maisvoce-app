@@ -13,7 +13,7 @@ function Login() {
   // Função que valida o email e o password, alterando o button
   const validadeButton = () => {
     const magicNumber = 6;
-    const emailRegex = /^[A-Za-z0-9]+@[a-zA-Z]+\.[a-zA-Z]+$/;
+    const emailRegex = /^[a-z0-9.-_-]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
     const validate = emailRegex.test(email) && password.length > magicNumber;
     return !validate;
   };

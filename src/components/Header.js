@@ -52,8 +52,7 @@ function Header(props) {
         </div>
       </header>
 
-      {/* {isSearching ? <SearchBar isSearching={ isSearching } /> : null} */}
-      <SearchBar isSearching={ isSearching } />
+      {isSearching ? <SearchBar isSearching={ isSearching } /> : null}
     </>
   );
 }

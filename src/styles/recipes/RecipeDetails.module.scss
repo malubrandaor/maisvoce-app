@@ -3,6 +3,9 @@
 .recipe_details {
   position: relative;
 
+  display: grid;
+  place-content: center;
+
   & > header {
     position: relative;
     margin-bottom: 1.6rem;
