@@ -11,7 +11,7 @@ O Mais Voce é um aplicativo de receitas de comida e bebida, onde o usuário pod
 
 <br>
 
-#### EN-US
+#### EN
 Mais Voce is a recipe app for food and drink, where the user can search for recipes, filter by category, name and ingredients, as well as being able to favorite recipes and access favorite recipes.
 <br>
 <br>
