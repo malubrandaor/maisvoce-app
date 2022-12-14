@@ -38,4 +38,4 @@ Mais Voce is a recipe app for food and drink, where the user can search for reci
 ## Como usar? / How to use?
 - Live Demo: [Mais Voce](https://maisvoce.opedro.dev/)
 
-- Use this application in mobile devices!
+- *Use this application in mobile devices!*
